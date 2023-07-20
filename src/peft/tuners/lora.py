@@ -214,7 +214,7 @@ class LoraModel(torch.nn.Module):
         if isinstance(lora_config.target_modules, str):
             target_module_found = re.fullmatch(lora_config.target_modules, key)
         else:
-            target_module_found = any(key.endswith(target_key) for target_key in lora_config.target_modules)
+            target_module_found = any(key.split(".")[-1] == target_key for target_key in lora_config.target_modules)
             is_using_layer_indexes = getattr(lora_config, "layers_to_transform", None) is not None
             layer_indexing_pattern = getattr(lora_config, "layers_pattern", None)
 
